@@ -1,2 +1,187 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage[ngerman]{babel}
+\geometry{a4paper, margin=1in}
+\usepackage{graphicx} % Required for inserting images
+
+\geometry{a4paper, left=4.5cm, right=4.5cm, top=4.5cm, bottom=4.5cm}
+
+\title{Abgabe 1 für Computergestützte Methoden}
+\author{Gruppe 49, Benjamin Kuhn & Dorian Grunitz}
+\date{01. Dezember 2024}
+
+\begin{document}
+
+
+
+\maketitle
+\tableofcontents
+\newpage
+
+
+\section{Der zentrale Grenzwertsatz}
+Der zentrale Grenzwertsatz (ZGS) ist ein fundamentales Resultat der Wahrscheinlichkeitstheorie,
+das die Verteilung von Summen unabhängiger, identisch
+verteilter (i.i.d.) Zufallsvariablen (ZV) beschreibt. Er besagt, dass unter bestimmten
+Voraussetzungen die Summe einer großen Anzahl solcher ZV annähernd
+normalverteilt ist, unabhängig von der Verteilung der einzelnen ZV. Dies ist besonders
+nützlich, da die Normalverteilung gut untersucht und mathematisch
+handhabbar ist.
+
+\subsection{Aussage}
+Sei $X_1, X_2, \dots, X_n$ eine Folge von i.i.d. ZV mit dem Erwartungswert $\mu = E(X_i)$ und der Varianz $\sigma^2 = \text{Var}(X_i)$, wobei $0 < \sigma^2 < \infty$ gelte. Dann konvergiert die standardisierte Summe $Z_n$ dieser ZV für $n \to \infty$ in Verteilung gegen eine Standartnormalverteilung:\footnote{Der zentrale Grenzwertsatz hat verschiedene Verallgemeinerungen. Eine davon ist der
+Lindeberg-Feller-Zentrale-Grenzwertsatz [1, Seite 328], der schwächere Bedingungen an
+die Unabhängigkeit und die identische Verteilung der ZV stellt.}
+
+\[
+Z_n = \frac{\sum_{i=1}^n X_i - n\mu}{\sigma \sqrt{n}} \xrightarrow{d} \mathcal{N}(0, 1). \begin{equation}
+    \label{formel1} %(1)
+\end{equation}
+\]
+
+Das bedeutet, dass für große $n$ die Summe der ZV näherungsweise normalverteilt ist mit Erwartungswert $n\mu$ und Varianz $n\sigma^2$:
+
+\[
+\sum_{i=1}^n X_i \sim \mathcal{N}(n\mu, n\sigma^2). \begin{equation}
+    \label{formel2} %(2) \end{equation}
+\]
+
+\subsection{Erklärung der Standardisierung}
+Um die Summe der ZV in eine Standardnormalverteilung zu transformieren, subtrahiert man den Erwartungswert $n\mu$ und teilt durch die Standartabweichung $\sigma\sqrt{n}$. Dies führt zu der obigen Formel (\hyperref[formel1]{1}). Die Darstellung (\hyperref[formel2]{2}) ist für $n\xrightarrow$ $\infty$ nicht wohldefiniert.
+
+\subsection{Anwendungen}
+Der ZGW wird in vielen Bereichen der Statistik und der Wahrscheinlichkeitstheorie angewendet. Typische Beispiele sind:
+\begin{itemize}
+    \item Stichprobenstatistik und Schätzverfahren: Die Berechnung von  und Hypothesentests, da Stichprobenmittelwerte für große Stichproben annähernd normalverteilt sind.
+    \item Gesetz großer Zahlen und Verteilungsanalyse, um die Verteilung von Summen unabhängiger Zufallsvariablen zu approximieren und Vorhersagen über aggregierte Daten zu treffen.
+\end{itemize}
+
+\newpage
+\section{Bearbeitung zu Aufgabe 1}
+\subsection{Berechnung der höchsten mittleren Temperatur in Grad Celsius mit einer Tabellenkalkulation}
+
+\begin{itemize}
+    \item Schritt 1: Aus dem Datensatz alle Daten außer die der Gruppe 49 löschen
+    \item Schritt 2: Datensatz spezifisch für Gruppe 49 in Tabellen Kalkulation (in dem Fall LibreOffice Calc) öffnen und anschließen als Formatierungsmöglichkeiten Trennoptionen: getrennt und Komma auswählen
+    \item Schritt 3: In der Tabelle eingeben: =MAX(J2:J366) eingeben
+    \item Schritt 4: Ergebnis ablesen : 83$^{\circ}$ Celsius
+\end{itemize}
+
+\subsection{Datenbank-Schema entwerfen (1. und 2. Normalform beachten)}
+1. Normalform: Alle Felder enthalten atomare Werte. Trennung von nicht atomaren Attributen.
+Jede Zelle wird eindeutig identifiziert (zB. Primärschlüssel)
+\\
+2. Normalform: Auftrennung in mehrere Tabellen, keine partielle Abhängigkeit bei zusammengesetzten Schlüsseln
+
+\subsection*{Datenbank Schema Beispiel: Hotel-Buchung}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Attributname} & \textbf{Datentyp} & \textbf{Beschreibung} \\ \hline
+BuchungID             & INTEGER           & Eindeutige ID der Buchung (Primärschlüssel) \\ \hline
+KundeID               & INTEGER           & Verweis auf die Tabelle Kunde (Fremdschlüssel) \\ \hline
+Zimmernummer          & INTEGER           & Nummer des gebuchten Zimmers \\ \hline
+Anreisedatum          & TEXT              & Datum der Anreise im Format YYYY-MM-DD \\ \hline
+Abreisedatum          & TEXT              & Datum der Abreise im Format YYYY-MM-DD \\ \hline
+Betrag                & REAL              & Betrag der Buchung in Euro \\ \hline
+\end{tabular}
+
+\subsection*{Datenbank Schema Beispiel: Hotel-Buchung 1. und 2. Normalform}
+\begin{tabular}{|l|l|l|l|l|l}
+\hline
+\textbf{BuchungID} & \textbf{KundeID} & \textbf{Zimmernummer} & \textbf{Anreisedatum} & \textbf{Abreisedatum} & \textbf{Betrag} \\ \hline
+2 & 1002 & 187 & 01.01.2025 & 10.01.2025 & 1000 \\ \hline
+1 & 1001 & 257 & 02.01.2025 & 05.01.2025 & 500 \\ \hline
+3 & 1003 & 385 & 01.01.2025 & 08.01.2025 & 750 \\ \hline
+\end{tabular}
+
+\subsection*{1. Normalform}
+\begin{tabular}{|l|l|l|l|l|l}
+\hline
+\textbf{BuchungID} & \textbf{KundeID} & \textbf{Zimmernummer} & \textbf{Anreisedatum} & \textbf{Abreisedatum} & \textbf{Betrag} \\ \hline
+1 & 1001 & 257 & 02.01.2025 & 05.01.2025 & 500 \\ \hline
+2 & 1002 & 187 & 01.01.2025 & 10.01.2025 & 1000 \\ \hline
+3 & 1003 & 385 & 01.01.2025 & 08.01.2025 & 750 \\ \hline
+\end{tabular}
+
+\subsection*{2. Normalform, Aufteilung der Tabelle in mehrere Tabellen. Nicht-Schlüsselattribute hängen vollständig vom Primärschlüssel ab
+Primärschlüssel: BuchungID
+Fremschlüssel: KundeID} \\ \hline
+\begin{tabular}{|l|l|l|l|l|l}
+\hline
+\textbf{BuchungID} & \textbf{KundeID} & \textbf{Zimmernummer} & \textbf{Anreisedatum} & \textbf{Abreisedatum} & \textbf{Betrag} \\ \hline
+1002 & 187 & 01.01.2025 & 10.01.2025 & 1000 \\ \hline
+1002 & 257 & 02.05.2025 & 06.05.2025 & 500 \\ \hline
+1002 & 385 & 08.07.2025 & 25.07.2025 & 1500 \\ \hline
+\end{tabular} \\ \hline
+
+\subsection*{KundeID wird als Fremdschlüssel genutzt, um alle kundenrelevanten Daten zusammenzufassen und doppelte Buchungen zu vermeiden. Dadurch werden Stammdaten des Kunden nicht dupliziert oder kommen mehrfach in Tabellen vor.}
+\begin{tabular}{|l|l|l|} \\ \hline
+\textbf{KundeID} & \textbf{Name} & \textbf{Adresse} \\ \hline
+1001 & Peter Vogel & Vogelweg 187 \\ \hline
+1002 & Jasmin Engels & Adenauerplatz 25 \\ \hline 
+\end{tabular} \\ \hline
+
+\subsection*{Umsetzung des Schemas in SQL und Import der zugeordneten Daten als CSV
+1. Erstellung der Kundentabelle mit allen relevanten Daten, um Duplikate und Widerholungen zu vermeiden
+2. Erstellung der Buchungstabelle mit Referenz zur KundenID für alle exakten Daten
+Wichtig: Keiner der Werte darf 0 sein.
+SQL:} 
+\subsection*{Kundentabelle:
+CREATE TABLE Kunde 
+(KundeID INTEGER PRIMARY KEY,
+Name TEXT NOT NULL,
+Adresse TEXT NOT NULL);
+
+Buchungstabelle:
+CREATE TABLE Buchung
+(BuchungID INTEGER PRIMARY KEY,
+KundeID INTEGER NOT NULL,
+Zimmernummer INTEGER NOT NULL,
+Anreisedatum TEXT NOT NULL,
+Abreisedatum TEXT NOT NULL,
+Betrag REAL NOT NULL,
+FOREIGN KEY (KundeID) REFERENCES Kunde(KundeID));} \\ \hline
+
+\subsection*{CSV-Datei für Kunden:
+KundeID,Name,Adresse \\ \hline
+1001 & Peter Vogel & Vogelweg 187 \\ \hline
+1002 & Jasmin Engels & Adenauerplatz 25 \\ \hline
+
+CSV-Datei für Buchungen:}
+\begin{tabular}{|l|l|l|l|l|l}
+BuchungID,KundeID,Zimmernummer,Anreisedatum,Abreisedatum,Betrag \\ \hline
+1 & 1001 & 257 & 02.01.2025 & 05.01.2025 & 500 \\ \hline
+2 & 1002 & 187 & 01.01.2025 & 10.01.2025 & 1000 \\ \hline
+3 & 1003 & 385 & 01.01.2025 & 08.01.2025 & 750 \\ \hline
+\end{tabular} \\ \hline
+
+\subsection*{Daten aus einer CSV-Datei in die Tabelle Kunde laden
+
+SQLite
+.mode csv
+.import Kunden.csv Kunde} \\ \hline
+
+\subsection*{Berechnung der höchsten mittleren Temperatur \\ \hline
+
+SELECT MAX(DailyAvgTemp) AS HöchsteMittlereTemperatur
+FROM (
+    SELECT AVG(Temperatur) AS DailyAvgTemp
+    FROM Datenbank Gruppe 49
+    GROUP BY DATE(Datum)
+) AS Tagesdurchschnitt;}
+
+
+
+\newpage
+
+\begin{thebibliography}{9}
+\bibitem{Klenke} Achim Klenke. \textit{Wahrscheinlichkeitstheorie}. Springer, 3. edition, 2013.
+\end{thebibliography}
+
+\end{document}
