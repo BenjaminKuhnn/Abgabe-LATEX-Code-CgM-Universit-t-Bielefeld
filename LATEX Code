@@ -172,7 +172,13 @@ FROM (
     FROM Datenbank Gruppe 49
     GROUP BY DATE(Datum)
 ) AS Tagesdurchschnitt;}
+\\
 
+\subsection{GITHUB LATEX-Code}
+Der GitHub Link, welcher zum LATEX-Code führt, lautet: 
+\\
+https://github.com/BenjaminKuhnn/Abgabe-LATEX-Code-CgM-Universit-t-Bielefeld.git
+\\
 
 
 \newpage
